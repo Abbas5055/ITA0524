@@ -1,0 +1,32 @@
+import cv2
+
+# Load the pre-trained Haar Cascade classifiers for smile detection
+smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
+
+# Check if the cascade is loaded properly
+if smile_cascade.empty():
+    print("Error loading cascade classifier for smile detection")
+
+# Load the image (replace with your path)
+image = cv2.imread("W:\Computer vision\group_ai.jpg")
+
+# Convert the image to grayscale
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Detect smiles in the image
+# Adjust scaleFactor and minNeighbors for better accuracy
+smiles = smile_cascade.detectMultiScale(gray, scaleFactor=1.8, minNeighbors=20, minSize=(25, 25))
+
+# Check if smiles are detected
+if len(smiles) == 0:
+    print("No smiles detected")
+else:
+    # Draw rectangles around the detected smiles
+    for (x, y, w, h) in smiles:
+        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+# Display the output
+cv2.imshow('Image with Detected Smiles', image)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
