@@ -1,0 +1,20 @@
+import cv2
+
+image = cv2.imread(r'C:\Users\jasva\OneDrive\Pictures\Frame.jpg')
+watermark = cv2.imread(r'C:\Users\jasva\OneDrive\Pictures\Watermark.png', cv2.IMREAD_UNCHANGED)
+
+# Resize watermark to fit the original image
+watermark_resized = cv2.resize(watermark, (image.shape[1], image.shape[0]))
+
+# Separate the alpha channel (transparency) from the watermark
+watermark_rgb = watermark_resized[:, :, :3]
+alpha_channel = watermark_resized[:, :, 3] / 255.0
+
+# Add watermark to the original image
+watermarked_image = cv2.addWeighted(image, 1, watermark_rgb, 0.3, 0)
+
+cv2.imshow('Original Image', image)
+cv2.imshow('Watermarked Image', watermarked_image)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

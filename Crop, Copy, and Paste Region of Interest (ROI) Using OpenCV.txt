@@ -1,0 +1,14 @@
+import cv2
+
+image = cv2.imread(r'C:\Users\jasva\OneDrive\Pictures\Frame.jpg')
+
+# Define the region of interest (ROI) coordinates (x, y, width, height)
+roi = image[50:200, 100:300]  # Crop a rectangular region
+
+# Paste the ROI at a new location in the image
+image[300:450, 400:600] = roi
+
+cv2.imshow('Original Image with ROI Pasted', image)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
